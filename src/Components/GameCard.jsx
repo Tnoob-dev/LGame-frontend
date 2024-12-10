@@ -6,18 +6,20 @@ function GameCard() {
   const [error, setError] = useState(null)
   const [showModal, setShowModal] = useState(false)
   const [description, setDescription] = useState('')
-  const [consola, setConsola] = useState('') 
+  const [console, setConsole] = useState('') 
 
   useEffect(() => {
     const pathname = window.location.pathname
-    const consolaNombre = pathname.substring(1)
-    setConsola(consolaNombre)
+    const consoleName = pathname.substring(1)
+    setConsole(consoleName)
 
     const fetchGameData = async () => {
       try {
+        // esto provocara un error, a partir de ese error, se aprovechara para mostrar los botones 
+        // de las consolas, y no el error en si, para ver el error debe verse en la consola
         let apiUrl = `http://192.168.213.96:8000/games/`
-        if (consolaNombre) {
-          apiUrl += `console/${consolaNombre}`
+        if (consoleName) {
+          apiUrl += `console/${consoleName}`
         }
         const response = await fetch(apiUrl)
         if (!response.ok) {
@@ -35,7 +37,7 @@ function GameCard() {
     }
 
     fetchGameData()
-  }, [consola])
+  }, [console])
 
 
   const handleShowDescription = (game) => {
